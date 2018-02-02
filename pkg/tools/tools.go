@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var AccessToken string = "XXXXXXXXXXXXXX"
+var AccessToken string = "XXX"
 
 func GetProblem(url string) []byte {
 
@@ -52,7 +52,7 @@ func SubmitSolution(input []byte, url string) {
 }
 
 func Base64Decode(input string) []byte {
-	data, err := base64.URLEncoding.DecodeString(input)
+	data, err := base64.StdEncoding.DecodeString(input)
 	if err != nil {
 		fmt.Println(err)
 		return make([]byte, 0)
