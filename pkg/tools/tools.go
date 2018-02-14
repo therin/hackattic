@@ -51,6 +51,10 @@ func SubmitSolution(input []byte, url string) {
 	fmt.Println("response Body:", string(body))
 }
 
+func Base64Encode(input []byte) string {
+	return base64.StdEncoding.EncodeToString(input)
+}
+
 func Base64Decode(input string) []byte {
 	data, err := base64.StdEncoding.DecodeString(input)
 	if err != nil {
