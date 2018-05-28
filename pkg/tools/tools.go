@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var AccessToken string = "XXX"
+var AccessToken string = ""
 
 func GetProblem(url string) []byte {
 
