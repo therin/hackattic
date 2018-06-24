@@ -27,7 +27,7 @@ func GetProblem(url string) []byte {
 		fmt.Println("Failed to read byte stream")
 	}
 
-	fmt.Println("response Body:", string(bodyBytes))
+	// fmt.Println("response Body:", string(bodyBytes))
 	defer resp.Body.Close()
 	return bodyBytes
 }

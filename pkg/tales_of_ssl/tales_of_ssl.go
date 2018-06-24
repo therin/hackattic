@@ -1,184 +1,91 @@
-// +build lib
-package main
+package tales_of_ssl
 
 import (
-	"bytes"
-	// "crypto/sha256"
-	// "encoding/gob"
+	"../tools"
+	"crypto"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"crypto/x509/pkix"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	// "math/bits"
-	"net/http"
-	// "os"
-	L "../tales_of_ssl/lib"
-	"strings"
+	"math/big"
 	"time"
 )
 
-// https://golang.org/src/crypto/tls/generate_cert.go
-
-type TestResponse struct {
-	PrivateKey   string       `json:"private_key"`
-	RequiredData RequiredData `json:"required_data"`
-}
-
-type RequiredData struct {
-	Domain       string `json:"domain"`
-	SerialNumber string `json:"serial_number"`
-	Country      string `json:"country"`
-}
-
 type Solution struct {
-	certificate string `json:"certificate"`
+	Certificate string `json:"certificate"`
 }
 
-// func writeGob(filePath string, object interface{}) error {
-// 	file, err := os.Create(filePath)
-// 	if err == nil {
-// 		encoder := gob.NewEncoder(file)
-// 		encoder.Encode(object)
-// 	}
-// 	file.Close()
-// 	return err
-// }
-
-// func readGob(filePath string, object interface{}) error {
-// 	file, err := os.Open(filePath)
-// 	if err == nil {
-// 		decoder := gob.NewDecoder(file)
-// 		err = decoder.Decode(object)
-// 	}
-// 	file.Close()
-// 	return err
-// }
-
-func request(url string) TestResponse {
-
-	// netClient := &http.Client{
-	// 	Timeout: time.Second * 10,
-	// }
-
-	// resp, err := netClient.Get(url)
-	// if err != nil {
-	// 	fmt.Println("Couldn't get problem:", err)
-	// }
-
-	asdfd := strings.NewReader(testJson)
-
-	// asdfd, _ := ioutil.ReadAll(resp.Body)
-
-	// fmt.Printf(string(asdfd))
-
-	decoder := json.NewDecoder(asdfd)
-	testResponse := TestResponse{}
-	err6 := decoder.Decode(&testResponse)
-	if err6 != nil {
-		fmt.Printf("Error decoding response:", err6)
+type Problem struct {
+	Private_Key   string `json:"private_key'`
+	Required_Data struct {
+		Domain        string `json:"domain'`
+		Serial_Number string `json:"serial_number'`
+		Country       string `json:"country'`
 	}
-
-	return testResponse
 }
 
-// func hashIt(str string) []byte {
-// 	h := sha256.New()
-// 	h.Write([]byte(str))
-// 	fmt.Println("working with", str)
+func getKeyPairs(private string) (privKey *rsa.PrivateKey, pubKey crypto.PublicKey) {
+	decoded, _ := base64.StdEncoding.DecodeString(private)
+	privKey, _ = x509.ParsePKCS1PrivateKey([]byte(decoded))
+	pubKey = privKey.Public()
+	fmt.Println("privKey", privKey)
+	fmt.Println("pubKey", pubKey)
+	return
+}
 
-// 	return h.Sum(nil)
-// }
+func TalesOfSSL() {
 
-// func hashIt2(block Block) [32]byte {
-// 	fmt.Println("hashing", fmt.Sprintf("", block))
-// 	jsonBuf, err := json.Marshal(&block)
-// 	if err != nil {
-// 		fmt.Println("Couldn't JSON encode block", block, ":", err)
-// 	}
-// 	return sha256.Sum256(jsonBuf)
-// }
+	bytissimo := tools.GetProblem("https://hackattic.com/challenges/tales_of_ssl/problem?access_token=" + tools.AccessToken)
 
-// func LeadingZeroBits(buf [32]byte) int {
-// 	zeros := 0
-// 	for _, b := range buf {
-// 		if b == 0 {
-// 			zeros += 8
-// 			continue
-// 		}
-// 		zeros += bits.LeadingZeros8(uint8(b))
-// 		break
-// 	}
-// 	return zeros
-// }
-
-// func calcZeroBits(input [32]byte) int {
-// 	stopFlag := 0
-// 	counter := 0
-// 	for _, item := range input {
-
-// 		for i := uint(0); i < 8; i++ {
-// 			if (item & (1 << i) >> i) == 0 {
-// 				counter += 1
-// 			} else {
-// 				stopFlag = 1
-// 				break
-// 			}
-
-// 		}
-// 		if stopFlag == 1 {
-// 			break
-// 		}
-
-// 	}
-// 	return counter
-
-// }
-
-func SubmitSolution(nonce string) {
-	netClient := &http.Client{
-		Timeout: time.Second * 10,
+	// Decode the json object
+	p := &Problem{}
+	err := json.Unmarshal(bytissimo, &p)
+	if err != nil {
+		panic(err)
 	}
 
-	solution := Solution{nonce}
+	serialNumber, _ := new(big.Int).SetString(p.Required_Data.Serial_Number, 0)
+
+	// request country code from user:
+	country := p.Required_Data.Country
+	fmt.Printf("what's CountryCode for '%s': ", p.Required_Data.Country)
+	fmt.Scanf("%s\n", &country)
+
+	priv, pub := getKeyPairs(p.Private_Key)
+
+	template := x509.Certificate{
+		SerialNumber: serialNumber,
+		Subject: pkix.Name{
+			Country:    []string{country},
+			CommonName: p.Required_Data.Domain,
+		},
+		NotBefore: time.Now(),
+		NotAfter:  time.Now().AddDate(110, 0, 0),
+
+		KeyUsage:              x509.KeyUsageCertSign,
+		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
+		BasicConstraintsValid: true,
+		SignatureAlgorithm:    x509.SHA256WithRSA,
+		IsCA:                  false,
+	}
+
+	template.DNSNames = append(template.DNSNames, p.Required_Data.Domain)
+
+	derBytes, err := x509.CreateCertificate(rand.Reader, &template, &template, pub, priv)
+	if err != nil {
+		fmt.Printf("Failed to create certificate: %s", err)
+	}
+
+	solution := Solution{tools.Base64Encode([]byte(derBytes))}
+
 	solutionJson, err := json.Marshal(&solution)
 	if err != nil {
-		fmt.Println("Couldn't marshal solution", solution, ":", err)
-	}
-	url := "https://hackattic.com/challenges/tales_of_ssl/solve?access_token=" + tools.AccessToken
-	resp, err := netClient.Post(url,
-		"application/json",
-		bytes.NewReader(solutionJson),
-	)
-	if err != nil {
-		fmt.Println("Couldn't do POST:", err)
+		panic(err)
 	}
 
-	fmt.Println("Got response to solution:", resp, resp.Body)
-
-	fmt.Println("response Status:", resp.Status)
-	fmt.Println("response Headers:", resp.Header)
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("response Body:", string(body))
-}
-
-func main() {
-
-	problem := request("https://hackattic.com/challenges/tales_of_ssl/problem?access_token=" + tools.AccessToken)
-
-	fmt.Printf("Got problem %+v\n", problem)
-
-	L.Generate_cert()
-
-	// for i := 0; i < 100000; i++ {
-	// 	bytes.Block.Nonce = i
-	// 	currentHash := hashIt2(bytes.Block)
-	// 	currentZeroBits := LeadingZeroBits(currentHash)
-	// 	if currentZeroBits == bytes.Difficulty {
-	// 		fmt.Printf("working with", currentZeroBits, bytes.Difficulty)
-	// 		fmt.Printf("found desired hash: %s and nonce %d ", fmt.Sprintf("%x", currentHash), i)
-	// 		SubmitSolution(i)
-	// 		break
-
-	// 	}
-	// }
+	tools.SubmitSolution(solutionJson, "https://hackattic.com//challenges/tales_of_ssl/solve?access_token="+tools.AccessToken)
 
 }
