@@ -51,7 +51,7 @@ func TalesOfSSL() {
 
 	// request country code from user:
 	country := p.Required_Data.Country
-	fmt.Printf("what's CountryCode for '%s': ", p.Required_Data.Country)
+	fmt.Printf("Enter country code for '%s': ", p.Required_Data.Country)
 	fmt.Scanf("%s\n", &country)
 
 	priv, pub := getKeyPairs(p.Private_Key)
