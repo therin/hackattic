@@ -133,6 +133,7 @@ func TheOneWithRedis() {
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Printf("%+v\n", dynamicSolution)
 	fmt.Printf("%+v\n", string(jsonSolution))
 
