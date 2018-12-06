@@ -8,7 +8,8 @@ import (
 	// "../../pkg/jotting_jwts"
 	// "../../pkg/tales_of_ssl"
 	// "../../pkg/brute_force_zip"
-	"../../pkg/the_one_with_redis"
+	// "../../pkg/the_one_with_redis"
+	"../../pkg/reading_qr"
 	// "fmt"
 )
 
@@ -19,6 +20,6 @@ func main() {
 	// collision_course.Collision_course()
 	// jotting_jwts.Jotting_jwts()
 	// tales_of_ssl.TalesOfSSL()
-	the_one_with_redis.TheOneWithRedis()
+	reading_qr.ReadingQR()
 
 }
