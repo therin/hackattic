@@ -9,7 +9,8 @@ import (
 	// "../../pkg/tales_of_ssl"
 	// "../../pkg/brute_force_zip"
 	// "../../pkg/the_one_with_redis"
-	"../../pkg/reading_qr"
+	// "../../pkg/reading_qr"
+	"../../pkg/websocket_chit_chat"
 	// "fmt"
 )
 
@@ -20,6 +21,6 @@ func main() {
 	// collision_course.Collision_course()
 	// jotting_jwts.Jotting_jwts()
 	// tales_of_ssl.TalesOfSSL()
-	reading_qr.ReadingQR()
+	websocket_chit_chat.WebSocketChat()
 
 }
