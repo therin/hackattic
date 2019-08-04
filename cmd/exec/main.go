@@ -10,7 +10,8 @@ import (
 	// "../../pkg/brute_force_zip"
 	// "../../pkg/the_one_with_redis"
 	// "../../pkg/reading_qr"
-	"../../pkg/websocket_chit_chat"
+	// "../../pkg/websocket_chit_chat"
+	"../../pkg/global_presence"
 	// "fmt"
 )
 
@@ -21,6 +22,6 @@ func main() {
 	// collision_course.Collision_course()
 	// jotting_jwts.Jotting_jwts()
 	// tales_of_ssl.TalesOfSSL()
-	websocket_chit_chat.WebSocketChat()
+	global_presence.GlobalPresence()
 
 }
