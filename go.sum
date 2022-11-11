@@ -12,6 +12,11 @@ github.com/kdar/goquirc v0.0.0-20170404200522-467c1664402a h1:bDIHypArUg+N7UOL7x
 github.com/kdar/goquirc v0.0.0-20170404200522-467c1664402a/go.mod h1:w3gsPLR0PsoLpdIETBjY4Qxf1XyKKQYSUtTdOBJjtLY=
 github.com/matthewjhe/rdb v0.0.0-20170410021424-12db9b2e12ab h1:ul7OKV3DjkgF/05biAPz3Tg8J+QSjjXbtN2spqbElhU=
 github.com/matthewjhe/rdb v0.0.0-20170410021424-12db9b2e12ab/go.mod h1:KW11Xd8BI7DKk5Q/wYm3EF6NhGDLO3q+PFfPnJfb8fU=
+<<<<<<< HEAD
+=======
+github.com/pin/tftp v2.1.0+incompatible h1:Yng4J7jv6lOc6IF4XoB5mnd3P7ZrF60XQq+my3FAMus=
+github.com/pin/tftp v2.1.0+incompatible/go.mod h1:xVpZOMCXTy+A5QMjEVN0Glwa1sUvaJhFXbr/aAxuxGY=
+>>>>>>> d30ab05 (Add trivial filing solution)
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 golang.org/x/crypto v0.2.0 h1:BRXPfhNivWL5Yq0BGQ39a2sW6t44aODpfxkWjYdzewE=
