@@ -9,10 +9,7 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/kdar/goquirc v0.0.0-20170404200522-467c1664402a
 	github.com/matthewjhe/rdb v0.0.0-20170410021424-12db9b2e12ab
-<<<<<<< HEAD
-=======
 	github.com/pin/tftp v2.1.0+incompatible
->>>>>>> d30ab05 (Add trivial filing solution)
 	golang.org/x/crypto v0.2.0
 )
 
