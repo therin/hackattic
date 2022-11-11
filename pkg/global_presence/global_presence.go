@@ -1,7 +1,6 @@
 package global_presence
 
 import (
-	"../../pkg/tools"
 	"bufio"
 	"encoding/json"
 	"fmt"
@@ -12,6 +11,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 type Problem struct {

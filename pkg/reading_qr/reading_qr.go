@@ -1,16 +1,17 @@
 package reading_qr
 
 import (
-	"../../pkg/tools"
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/kdar/goquirc"
 	"image"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
 	"io/ioutil"
+
+	"github.com/kdar/goquirc"
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 type Solution struct {

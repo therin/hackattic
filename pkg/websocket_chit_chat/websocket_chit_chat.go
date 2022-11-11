@@ -1,10 +1,8 @@
 package websocket_chit_chat
 
 import (
-	"../../pkg/tools"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"log"
 	"math"
 	"net/url"
@@ -14,6 +12,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gorilla/websocket"
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 type Problem struct {

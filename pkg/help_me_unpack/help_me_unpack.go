@@ -1,11 +1,12 @@
 package help_me_unpack
 
 import (
-	"../tools"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"math"
+
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 type Solution struct {

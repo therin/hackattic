@@ -1,13 +1,14 @@
 package backup_restore
 
 import (
-	"../../pkg/tools"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 // NOTES:

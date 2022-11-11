@@ -1,13 +1,14 @@
 package the_one_with_redis
 
 import (
-	"../../pkg/tools"
 	"encoding/json"
 	"fmt"
-	"github.com/matthewjhe/rdb"
 	"io/ioutil"
 	"regexp"
 	"time"
+
+	"github.com/matthewjhe/rdb"
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 var dbCounter int = 0

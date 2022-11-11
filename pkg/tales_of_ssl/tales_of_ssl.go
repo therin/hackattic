@@ -1,7 +1,6 @@
 package tales_of_ssl
 
 import (
-	"../tools"
 	"crypto"
 	"crypto/rand"
 	"crypto/rsa"
@@ -12,6 +11,8 @@ import (
 	"fmt"
 	"math/big"
 	"time"
+
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 type Solution struct {

@@ -1,13 +1,14 @@
 package collision_course
 
 import (
-	"../../pkg/tools"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
+
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 // https://github.com/brimstone/fastcoll

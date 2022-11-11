@@ -1,12 +1,13 @@
 package password_hashing
 
 import (
-	"../../pkg/tools"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+
+	"github.com/therin/hackattic/pkg/tools"
 	"golang.org/x/crypto/pbkdf2"
 	"golang.org/x/crypto/scrypt"
 )

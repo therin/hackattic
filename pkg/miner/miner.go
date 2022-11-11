@@ -11,6 +11,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 type TestResponse struct {

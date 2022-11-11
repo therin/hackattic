@@ -1,16 +1,17 @@
 package jotting_jwts
 
 import (
-	"../tools"
 	"encoding/json"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 type Solution struct {

@@ -1,7 +1,6 @@
 package brute_force_zip
 
 import (
-	"../../pkg/tools"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -12,6 +11,8 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/therin/hackattic/pkg/tools"
 )
 
 type Solution struct {

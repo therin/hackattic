@@ -11,7 +11,8 @@ import (
 	// "../../pkg/the_one_with_redis"
 	// "../../pkg/reading_qr"
 	// "../../pkg/websocket_chit_chat"
-	"../../pkg/global_presence"
+	// "../../pkg/global_presence"
+	trivialfiling "github.com/therin/hackattic/pkg/trivial_filing"
 	// "fmt"
 )
 
@@ -22,6 +23,6 @@ func main() {
 	// collision_course.Collision_course()
 	// jotting_jwts.Jotting_jwts()
 	// tales_of_ssl.TalesOfSSL()
-	global_presence.GlobalPresence()
+	trivialfiling.TrivialFiling()
 
 }
