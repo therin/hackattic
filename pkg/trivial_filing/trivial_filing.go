@@ -1,6 +1,7 @@
 package trivialfiling
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -24,10 +25,10 @@ type Solution struct {
 
 var localAddress string = ""
 var externalAddress string = ""
-var port string = "9876"
+var port string = "69"
 
 func TrivialFiling() {
-	go tftpServer()
+	// go tftpServer()
 
 	bytissimo := tools.GetProblem("https://hackattic.com/challenges/trivial_filing/problem?access_token=" + tools.AccessToken)
 	fmt.Println(string(bytissimo))
@@ -41,11 +42,12 @@ func TrivialFiling() {
 	}
 
 	// post tftp url to solution endpoint
-	solution := Solution{externalAddress, port}
+	solution := Solution{externalAddress, "69"}
 	solutionJson, err := json.Marshal(&solution)
 	if err != nil {
 		panic(err)
 	}
+	time.Sleep(1 * time.Second)
 	fmt.Printf("Submitting solution endpoint: %s", solutionJson)
 	tools.SubmitSolution(solutionJson, "https://hackattic.com/challenges/trivial_filing/solve?access_token="+tools.AccessToken)
 
@@ -56,8 +58,8 @@ func TrivialFiling() {
 
 func tftpServer() {
 	s := tftp.NewServer(readHandler, writeHandler)
-	s.SetTimeout(20 * time.Second)                                           // optional
-	err := s.ListenAndServe(strings.Join([]string{localAddress, port}, ":")) // blocks until s.Shutdown() is called
+	s.SetTimeout(20 * time.Second) // optional
+	err := s.ListenAndServe(":69") // blocks until s.Shutdown() is called
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "server: %v\n", err)
 		os.Exit(1)
@@ -66,9 +68,12 @@ func tftpServer() {
 
 // readHandler is called when client starts file download from server
 func readHandler(filename string, rf io.ReaderFrom) error {
+	fmt.Printf("Rf is: %s \n", rf)
 	fmt.Printf("Got the request for file: %s \n", filename)
 	raddr := rf.(tftp.OutgoingTransfer).RemoteAddr()
+
 	log.Println("RRQ from", raddr.String())
+	rf.(tftp.OutgoingTransfer).SetSize(12)
 	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
@@ -76,7 +81,6 @@ func readHandler(filename string, rf io.ReaderFrom) error {
 	}
 	fmt.Printf("Reading from the file: %s \n", filename)
 	n, err := rf.ReadFrom(file)
-	fmt.Print(n)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		return err
@@ -104,14 +108,12 @@ func writeHandler(filename string, wt io.WriterTo) error {
 
 func writeFile(name string, content io.Reader) {
 
-	c, err := tftp.NewClient(strings.Join([]string{localAddress, port}, ":"))
-	c.SetTimeout(20 * time.Second) // optional
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(content)
+
+	err := os.WriteFile(name, buf.Bytes(), 0777)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", err)
+		log.Fatal(err)
 	}
-	c.SetTimeout(5 * time.Second) // optional
-	rf, err := c.Send(name, "octet")
-	n, err := rf.ReadFrom(content)
-	fmt.Printf("%d bytes sent\n", n)
 
 }

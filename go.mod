@@ -1,6 +1,6 @@
 module github.com/therin/hackattic
 
-go 1.19
+go 1.18
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -15,5 +15,8 @@ require (
 
 require (
 	github.com/felixge/httpsnoop v1.0.1 // indirect
+	github.com/map34/simple_tftp v0.0.0-20180817111427-4ddfe60c9a96 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/sirupsen/logrus v1.9.0 // indirect
+	golang.org/x/sys v0.2.0 // indirect
 )

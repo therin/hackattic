@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-var AccessToken string = "a91a85cf0f1d41a2"
+var AccessToken string = ""
 
 func GetProblem(url string) []byte {
 
@@ -36,7 +36,7 @@ func GetProblem(url string) []byte {
 
 func SubmitSolution(input []byte, url string) {
 	netClient := &http.Client{
-		Timeout: time.Second * 10,
+		Timeout: time.Second * 20,
 	}
 
 	resp, err := netClient.Post(url,
