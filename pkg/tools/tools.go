@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"time"
@@ -24,8 +23,8 @@ func GetProblem(url string) []byte {
 		fmt.Println("Couldn't get problem:", err)
 	}
 
-	bodyBytes, err2 := ioutil.ReadAll(resp.Body)
-	if err2 != nil {
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
 		fmt.Println("Failed to read byte stream")
 	}
 
@@ -49,7 +48,7 @@ func SubmitSolution(input []byte, url string) {
 
 	fmt.Println("response Status:", resp.Status)
 	fmt.Println("response Headers:", resp.Header)
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 	fmt.Println("response Body:", string(body))
 }
 
